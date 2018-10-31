@@ -1,4 +1,4 @@
-package ag.pdf.converter.models;
+package ag.pdf.converter.model;
 
 public class TextWidget {
 	

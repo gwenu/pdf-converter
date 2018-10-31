@@ -17,6 +17,8 @@ lib/
 *.iml
 *.iws
 
+.DS_Store
+
 ## Additional for IntelliJ
 out/
 
