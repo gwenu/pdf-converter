@@ -1,6 +1,9 @@
 {
-	"widget": "grid",
-	"parms": {
-		"title": "GridTitle"
+	"widget": "container",
+	"content": {
+		"widget": "grid",
+		"parms": {
+			"title": "GridTitle"
+		}
 	}
 }

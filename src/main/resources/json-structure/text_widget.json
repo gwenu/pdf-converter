@@ -1,7 +1,12 @@
 {
-	"widget": "text",
-	"style": {
-		"size": "10",
-		"color": "red"
-	}
+	"widget": "container",
+	"content": [
+		{
+			"widget": "text",
+			"style": {
+				"size": "10",
+				"color": "red"
+			}
+		}
+	]
 }

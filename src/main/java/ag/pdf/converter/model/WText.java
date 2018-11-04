@@ -1,6 +1,6 @@
 package ag.pdf.converter.model;
 
-public class TextWidget {
+public class WText extends Widget {
 	
 	private Style style;
 
