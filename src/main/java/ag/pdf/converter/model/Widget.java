@@ -4,15 +4,17 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import ag.pdf.converter.util.json.JsonConst;
-
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = JsonConst.Key.WIDGET)
-@JsonSubTypes({
-    @Type(value = WText.class, name = JsonConst.Value.TEXT)
-})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "widget")
+@JsonSubTypes({ 
+	@Type(value = WContainer.class, name = "container"),
+	@Type(value = WText.class, name = "text")})
 public abstract class Widget {
-	
+
 	private String widget;
+	
+	protected Widget(String widget) {
+		this.widget = widget;
+	}
 
 	public String getWidget() {
 		return widget;

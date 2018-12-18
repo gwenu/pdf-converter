@@ -3,14 +3,15 @@ package ag.pdf.converter.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import ag.pdf.converter.util.json.JsonConst;
 
-public class WContainer {
+public class WContainer extends Widget {
 	
-	public String widget;
-	
-	@JsonProperty(value = "content")
 	private List<Widget> content = new ArrayList<>();
+	
+	public WContainer() {
+		super(JsonConst.Value.CONTAINER);
+	}
 
 	public List<Widget> getContent() {
 		return content;
