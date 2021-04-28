@@ -12,10 +12,14 @@ import ag.pdf.converter.model.WContainer;
 @Service
 public class RequestParser {
 
-	public WContainer parse(String json) throws JsonParseException, IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		WContainer container = mapper.readValue(json, WContainer.class);
-		
-		return container;
-	}
+    public WContainer parse(String json) throws JsonParseException, IOException {
+        WContainer container = null;
+
+        if (!json.isEmpty()) {
+            ObjectMapper mapper = new ObjectMapper();
+            container = mapper.readValue(json, WContainer.class);
+        }
+
+        return container;
+    }
 }

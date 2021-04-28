@@ -1,20 +1,15 @@
 package ag.pdf.converter.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.IOException;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import com.fasterxml.jackson.core.JsonParseException;
-
 import ag.pdf.converter.model.WContainer;
 import ag.pdf.converter.model.WText;
 import ag.pdf.converter.util.json.JsonConst;
+import com.fasterxml.jackson.core.JsonParseException;
+import org.junit.jupiter.api.Test;
 
-@RunWith(SpringRunner.class)
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class RequestParserTest {
 
 	private static final String TEST_JSON = "{\"widget\": \"container\", "

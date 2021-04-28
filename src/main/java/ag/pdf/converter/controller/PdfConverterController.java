@@ -1,7 +1,10 @@
 package ag.pdf.converter.controller;
 
-import java.io.IOException;
-
+import ag.pdf.converter.model.WContainer;
+import ag.pdf.converter.service.PdfConverterWriter;
+import ag.pdf.converter.service.RequestParser;
+import ag.pdf.converter.validation.JsonFormatValidator;
+import ag.pdf.converter.validation.ValidationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,32 +14,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
-import ag.pdf.converter.model.WContainer;
-import ag.pdf.converter.service.PdfConverterWriter;
-import ag.pdf.converter.service.RequestParser;
+import java.io.IOException;
 
 @RestController
 public class PdfConverterController {
-	private static final String INDEX_VIEW = "index";
 
-	@Autowired
-	private RequestParser parser;
+    @Autowired
+    private RequestParser parser;
 
-	@Autowired
-	private PdfConverterWriter writer;
+    @Autowired
+    private PdfConverterWriter writer;
 
-	@RequestMapping(value = "/")
-	public ModelAndView hello() {
-		return new ModelAndView(INDEX_VIEW);
-	}
+    @Autowired
+    private JsonFormatValidator validator;
 
-	@RequestMapping(value = "/pdf", method = RequestMethod.POST, produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<byte[]> pdf(@RequestParam("jsonToConvert") String jsonToConvert) throws IOException {
-		WContainer container = parser.parse(jsonToConvert);
-		ResponseEntity<byte[]> response = new ResponseEntity<>(writer.writeToByteArray(container), new HttpHeaders(),
-				HttpStatus.OK);
-		return response;
-	}
+    @RequestMapping(value = "/pdf", method = RequestMethod.POST, produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> pdf(@RequestParam("jsonToConvert") String jsonToConvert) throws IOException {
+        ValidationResult validationResult = validator.validate(jsonToConvert);
+
+        if (validationResult.isValid()) {
+            WContainer container = parser.parse(jsonToConvert);
+            ResponseEntity<byte[]> response = new ResponseEntity<>(writer.writeToByteArray(container), new HttpHeaders(),
+                    HttpStatus.OK);
+            return response;
+        } else {
+            return null;
+        }
+    }
 }

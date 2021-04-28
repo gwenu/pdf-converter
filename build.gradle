@@ -1,50 +1,28 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.1.RELEASE")
-    }
+plugins {
+    id 'org.springframework.boot' version '2.4.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-jar {
-    baseName = 'pdf-converter'
-    version =  '0.1.0'
-}
+group = 'ag.processmonitor'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 dependencies {
-    // tag::jetty[]
-    compile("org.springframework.boot:spring-boot-starter-web:2.1.1.RELEASE") {
-        exclude module: "spring-boot-starter-tomcat"
-    }
-    compile('org.springframework.boot:spring-boot-starter-jetty:2.1.1.RELEASE')
-    // end::jetty[]
-    
-    compile("javax.servlet:jstl:1.2")
-    compile('com.itextpdf:io:7.0.2')
-    compile('com.itextpdf:kernel:7.0.2')
-    compile('com.itextpdf:layout:7.0.2')
-    
-    // tag::actuator[]
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-    // end::actuator[]
-    testCompile("org.springframework.boot:spring-boot-starter-test")
- 	testCompile('org.junit.jupiter:junit-jupiter-api:5.3.1')
-	testCompile('org.junit.jupiter:junit-jupiter-params:5.3.1')
-	testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.1')
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'com.itextpdf:io:7.1.15'
+    implementation 'com.itextpdf:kernel:7.1.15'
+    implementation 'com.itextpdf:layout:7.1.15'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 }
 
 test {
