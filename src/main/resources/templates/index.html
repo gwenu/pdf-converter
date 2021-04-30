@@ -3,7 +3,7 @@
 <head>
 	<title>Pdf Converter</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<script type="text/javascript" src="/resources/js/form-submit.js" ></script>
+	<script type="text/javascript" src="js/form.js" ></script>
 </head>
 <body>
 	<nav class="navbar navbar-default" role="navigation">
@@ -13,10 +13,10 @@
     </nav>
 
 	<div class="container">
-		<form target="_blank" method="post" action="/pdf">
+		<form name="converter" action="/pdf" onsubmit="return handleForm();">
+			<div id="converterError" class="alert alert-danger" style="display:none;"></div>
 			<div class="form-group">
-				<label for="textContainer">Insert Json structure to be
-					converted to PDF:</label>
+				<label for="textContainer">Insert Json structure to be converted to PDF:</label>
 				<textarea name="jsonToConvert" class="form-control" id="textContainer" rows="10"></textarea>
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>

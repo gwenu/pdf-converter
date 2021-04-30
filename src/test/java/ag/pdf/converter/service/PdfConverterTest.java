@@ -38,4 +38,11 @@ public class PdfConverterTest {
 
         assertTrue(content.length == 0);
     }
+
+    @Test
+    public void getPdfAsByteArray_invalidJson() throws IOException {
+        byte[] content = converter.getPdfAsByteArray("{}");
+
+        assertTrue(content.length == 0);
+    }
 }

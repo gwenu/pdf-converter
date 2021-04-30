@@ -1,5 +1,8 @@
 package ag.pdf.converter.validation;
 
+import ag.pdf.converter.model.Container;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,17 +11,38 @@ import java.util.List;
 @Service
 public class JsonFormatValidator {
 
-    private static final String EMPTY_JSON = "Json submitted for validation is empty.";
+    private static final String ERROR_EMPTY_JSON = "Json cannot be empty.";
+    private static final String ERROR_INVALID_JSON = "Json structure is not valid.";
 
     private static final List<String> EMPTY_LIST = new ArrayList<>();
 
     public ValidationResult validate(String json) {
-        ValidationResult validationResult = new ValidationResult(true, EMPTY_LIST, EMPTY_LIST);
+        boolean isValid = true;
+        List<String> errors = EMPTY_LIST;
+
 
         if(json.isEmpty()) {
-            validationResult = new ValidationResult(false, List.of(EMPTY_JSON), EMPTY_LIST);
+            isValid = false;
+            errors.add(ERROR_EMPTY_JSON);
         }
 
-        return validationResult;
+        if(!isValidJsonStructure(json, Container.class)) {
+            isValid = false;
+            errors.add(ERROR_INVALID_JSON);
+
+        }
+
+        return new ValidationResult(isValid, errors, EMPTY_LIST);
+    }
+
+    private boolean isValidJsonStructure(String jsonStr, Class<?> valueType) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            mapper.readValue(jsonStr, valueType);
+            return true;
+        } catch (JsonProcessingException e) {
+            return false;
+        }
     }
 }
