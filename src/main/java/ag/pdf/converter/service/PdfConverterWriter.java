@@ -12,7 +12,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.IBlockElement;
 
-import ag.pdf.converter.model.WContainer;
+import ag.pdf.converter.model.Container;
 
 @Service
 public class PdfConverterWriter {
@@ -20,7 +20,7 @@ public class PdfConverterWriter {
 	@Autowired
 	private WidgetParser widgetParser;
 	
-	public byte[] writeToByteArray(WContainer container) throws IOException {
+	public byte[] writeToByteArray(Container container) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PdfWriter writer = new PdfWriter(baos);
 		PdfDocument pdf = new PdfDocument(writer);
@@ -31,7 +31,7 @@ public class PdfConverterWriter {
 		for(IBlockElement element : elements) {
 			document.add(element);
 		}
-		
+
 		document.close();
 		baos.close();
 		

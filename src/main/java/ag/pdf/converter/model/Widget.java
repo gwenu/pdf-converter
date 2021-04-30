@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "widget")
 @JsonSubTypes({ 
-	@Type(value = WContainer.class, name = "container"),
-	@Type(value = WText.class, name = "text")})
+	@Type(value = Container.class, name = "container"),
+	@Type(value = Text.class, name = "text")})
 public abstract class Widget {
 
 	private String widget;

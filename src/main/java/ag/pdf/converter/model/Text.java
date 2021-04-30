@@ -2,12 +2,12 @@ package ag.pdf.converter.model;
 
 import ag.pdf.converter.util.json.JsonConst;
 
-public class WText extends Widget {
+public class Text extends Widget {
 	
 	private String value;
 	private Style style;
 	
-	public WText() {
+	public Text() {
 		super(JsonConst.Value.TEXT);
 	}
 

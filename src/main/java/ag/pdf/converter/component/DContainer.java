@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.itextpdf.layout.element.IBlockElement;
 
-import ag.pdf.converter.model.WContainer;
-import ag.pdf.converter.model.WText;
+import ag.pdf.converter.model.Container;
+import ag.pdf.converter.model.Text;
 import ag.pdf.converter.model.Widget;
 
 public class DContainer extends AbstractDWidget implements DWidget {
@@ -30,8 +30,8 @@ public class DContainer extends AbstractDWidget implements DWidget {
 	private List<DWidget> convertToDWidgets(Widget widget) {
 		List<DWidget> widgets = new ArrayList<>();
 		
-		 for (Widget contentItem : ((WContainer) widget).getContent()) {
-			 if(contentItem instanceof WText) {
+		 for (Widget contentItem : ((Container) widget).getContent()) {
+			 if(contentItem instanceof Text) {
 				 widgets.add(new DText(contentItem));
 			 }
 		 }

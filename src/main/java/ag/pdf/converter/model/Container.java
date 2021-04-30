@@ -5,11 +5,11 @@ import java.util.List;
 
 import ag.pdf.converter.util.json.JsonConst;
 
-public class WContainer extends Widget {
+public class Container extends Widget {
 	
 	private List<Widget> content = new ArrayList<>();
 	
-	public WContainer() {
+	public Container() {
 		super(JsonConst.Value.CONTAINER);
 	}
 

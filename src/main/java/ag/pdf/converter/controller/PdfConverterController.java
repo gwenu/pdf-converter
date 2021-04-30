@@ -1,8 +1,6 @@
 package ag.pdf.converter.controller;
 
-import ag.pdf.converter.model.WContainer;
-import ag.pdf.converter.service.PdfConverterWriter;
-import ag.pdf.converter.service.RequestParser;
+import ag.pdf.converter.service.PdfConverter;
 import ag.pdf.converter.validation.JsonFormatValidator;
 import ag.pdf.converter.validation.ValidationResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +19,24 @@ import java.io.IOException;
 public class PdfConverterController {
 
     @Autowired
-    private RequestParser parser;
-
-    @Autowired
-    private PdfConverterWriter writer;
+    private PdfConverter pdfConverter;
 
     @Autowired
     private JsonFormatValidator validator;
 
     @RequestMapping(value = "/pdf", method = RequestMethod.POST, produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> pdf(@RequestParam("jsonToConvert") String jsonToConvert) throws IOException {
+        byte[] content = "".getBytes();
+        HttpStatus status = HttpStatus.OK;
+
         ValidationResult validationResult = validator.validate(jsonToConvert);
 
         if (validationResult.isValid()) {
-            WContainer container = parser.parse(jsonToConvert);
-            ResponseEntity<byte[]> response = new ResponseEntity<>(writer.writeToByteArray(container), new HttpHeaders(),
-                    HttpStatus.OK);
-            return response;
+            content = pdfConverter.getPdfAsByteArray(jsonToConvert);
         } else {
-            return null;
+            status = HttpStatus.BAD_REQUEST;
         }
+
+        return new ResponseEntity<>(content, new HttpHeaders(), status);
     }
 }
