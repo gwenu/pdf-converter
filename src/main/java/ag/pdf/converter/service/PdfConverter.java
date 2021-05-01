@@ -1,6 +1,6 @@
 package ag.pdf.converter.service;
 
-import ag.pdf.converter.model.Container;
+import ag.pdf.converter.descriptor.ContainerDescriptor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-
 
 @Service
 public class PdfConverter {
@@ -24,9 +23,10 @@ public class PdfConverter {
 
         if (json != null && !json.isEmpty()) {
             ObjectMapper mapper = new ObjectMapper();
+
             try {
-                Container container = mapper.readValue(json, Container.class);
-                pdfAsByteArray = writer.writeToByteArray(container);
+                ContainerDescriptor containerDescriptor = mapper.readValue(json, ContainerDescriptor.class);
+                pdfAsByteArray = writer.writeToByteArray(containerDescriptor);
             } catch (JsonProcessingException exception) {
                 LOGGER.warn("Json has incorrect format: " + exception);
             }

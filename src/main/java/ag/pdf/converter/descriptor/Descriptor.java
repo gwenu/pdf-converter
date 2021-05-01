@@ -1,4 +1,4 @@
-package ag.pdf.converter.model;
+package ag.pdf.converter.descriptor;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "widget")
 @JsonSubTypes({ 
-	@Type(value = Container.class, name = "container"),
-	@Type(value = Text.class, name = "text")})
-public abstract class Widget {
+	@Type(value = ContainerDescriptor.class, name = "container"),
+	@Type(value = TextDescriptor.class, name = "text")})
+public abstract class Descriptor {
 
 	private String widget;
 	
-	protected Widget(String widget) {
+	protected Descriptor(String widget) {
 		this.widget = widget;
 	}
 

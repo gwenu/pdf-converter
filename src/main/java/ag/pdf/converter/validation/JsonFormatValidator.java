@@ -1,6 +1,6 @@
 package ag.pdf.converter.validation;
 
-import ag.pdf.converter.model.Container;
+import ag.pdf.converter.descriptor.ContainerDescriptor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class JsonFormatValidator {
             errors.add(ERROR_EMPTY_JSON);
         }
 
-        if(!isValidJsonStructure(json, Container.class)) {
+        if(!isValidJsonStructure(json, ContainerDescriptor.class)) {
             isValid = false;
             errors.add(ERROR_INVALID_JSON);
 
