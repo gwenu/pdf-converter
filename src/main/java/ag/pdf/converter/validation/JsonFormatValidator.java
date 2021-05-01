@@ -18,18 +18,15 @@ public class JsonFormatValidator {
 
     public ValidationResult validate(String json) {
         boolean isValid = true;
-        List<String> errors = EMPTY_LIST;
+        List<String> errors = new ArrayList<>();
 
 
-        if(json.isEmpty()) {
+        if (json.isEmpty()) {
             isValid = false;
             errors.add(ERROR_EMPTY_JSON);
-        }
-
-        if(!isValidJsonStructure(json, ContainerDescriptor.class)) {
+        } else if (!isValidJsonStructure(json, ContainerDescriptor.class)) {
             isValid = false;
             errors.add(ERROR_INVALID_JSON);
-
         }
 
         return new ValidationResult(isValid, errors, EMPTY_LIST);
