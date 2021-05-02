@@ -31,14 +31,14 @@ public class ContainerComponent implements Component {
 	}
 	
 	private List<Component> convertToDWidgets(ContainerDescriptor containerDescriptor) {
-		List<Component> widgets = new ArrayList<>();
+		List<Component> components = new ArrayList<>();
 		
 		 for (Descriptor descriptor : containerDescriptor.getContent()) {
 			 if(descriptor instanceof TextDescriptor) {
-				 widgets.add(new TextComponent((TextDescriptor) descriptor));
+				 components.add(new TextComponent((TextDescriptor) descriptor));
 			 }
 		 }
-		return widgets;
+		return components;
 	}
 
 	@Override
@@ -52,6 +52,7 @@ public class ContainerComponent implements Component {
 		for (Component componentItem : components) {
 			elements.add(componentItem.getIElement());
 		}
+
 		return elements;
 	}
 }
