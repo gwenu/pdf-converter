@@ -20,7 +20,6 @@ public class JsonFormatValidator {
         boolean isValid = true;
         List<String> errors = new ArrayList<>();
 
-
         if (json.isEmpty()) {
             isValid = false;
             errors.add(ERROR_EMPTY_JSON);

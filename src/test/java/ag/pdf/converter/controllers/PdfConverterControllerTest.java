@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,52 +20,50 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class PdfConverterControllerTest {
 
-	private static final String VALID_JSON = "{\"widget\": \"container\", "
-			+ "\"content\": [ {\"widget\": \"text\", \"value\": \"test content\","
-			+ "\"style\": {\"size\": \"10\",\"color\": \"red\"}}]}";
+    private static final String VALID_JSON = "{\"widget\": \"container\", "
+            + "\"content\": [ {\"widget\": \"text\", \"value\": \"test content\","
+            + "\"style\": {\"size\": \"10\",\"color\": \"red\"}}]}";
 
-	@Autowired
-	private MockMvc mockMvc;
+    private static final String EXPECTED_ERROR_MESSAGE = "{\"errors\":[\"Json structure is not valid.\"],"
+            + "\"warnings\":[],\"valid\":false}";
 
-	@MockBean
-	private PdfConverter parser;
+    @Autowired
+    private MockMvc mockMvc;
 
-	@MockBean
-	private PdfConverterWriter writer;
+    @MockBean
+    private PdfConverter parser;
 
-	@Test
-	public void pdf_ValidJsonParm() throws Exception {
-		MvcResult result = this.mockMvc
-				.perform(post("/pdf")
-						.contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(VALID_JSON))
-				.andExpect(status().isOk())
-				.andReturn();
+    @MockBean
+    private PdfConverterWriter writer;
 
-		assertTrue(result.getResponse().getContentLength() == 0);
-	}
+    @Test
+    public void pdf_ValidJsonParm() throws Exception {
+        this.mockMvc.perform(post("/pdf")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(VALID_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+    }
 
-	@Test
-	public void pdf_InvalidJsonParm() throws Exception {
-		MvcResult result = this.mockMvc
-				.perform(post("/pdf")
-						.contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content("{}"))
-				.andExpect(status().isBadRequest())
-				.andReturn();
+    @Test
+    public void pdf_InvalidJsonParm() throws Exception {
+        MvcResult result = this.mockMvc
+                .perform(post("/pdf")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content("{}"))
+                .andExpect(status().isBadRequest())
+                .andReturn();
 
-		assertTrue(result.getResponse().getContentLength() == 0);
-	}
+        assertEquals(EXPECTED_ERROR_MESSAGE, result.getResponse().getContentAsString());
+    }
 
-	@Test
-	public void pdf_EmptyJsonParm() throws Exception {
-		MvcResult result = this.mockMvc
-				.perform(post("/pdf")
-						.contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(""))
-				.andExpect(status().isBadRequest())
-				.andReturn();
-
-		assertTrue(result.getResponse().getContentLength() == 0);
-	}
+    @Test
+    public void pdf_EmptyJsonParm() throws Exception {
+        this.mockMvc
+                .perform(post("/pdf")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(""))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
 }
